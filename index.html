@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description" content="DiffVSR">
+  <meta name="keywords" content="Video Super-Resolution, Real-World Restoration, Temporal Consistency, Multi-Scale Attention, Progressive Learning">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>DiffVSR</title>
+  <!-- Latex -->
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]},
+        TeX: { equationNumbers: { autoNumber: "AMS" } },
+      });
+      </script>
+  <script type="text/javascript" async
+    src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML">
+  </script>
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<!--   <script async src="https://www.googletagmanager.com/gtag/js?id=G-PYVRSFMDRL"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+
+    gtag('config', 'G-PYVRSFMDRL');
+
+  </script> -->
+  <style>
+  .hr {width: 100%; height: 1px; margin: 48px 0; background-color: #d6dbdf;}
+  </style>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+  <link rel="stylesheet" href="./assets/css/bulma.min.css">
+  <link rel="stylesheet" href="./assets/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./assets/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./assets/css/fontawesome.all.min.css">
+  <link rel="stylesheet" href="./assets/css/index.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+
+  <!-- custom css file  -->
+  <link rel="stylesheet" href="./assets/css/style.css">
+  <link rel="stylesheet" href="./assets/css/twentytwenty.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop head">
+      <div class="columns is-centered">
+        <div class="column has-text-centered head">
+
+          <h1 class="title is-2 publication-title"> 
+            <span style="color: #EA4335;">Diff</span><span style="color: #4285F4;">V</span><span style="color: #FBBC05;">SR</span>
+          </h1>
+          <h1 class="title is-3 publication-title"> 
+            Diffusion-based Video Super-Resolution
+          </h1>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">
+              <a href="https://scholar.google.com/citations?user=GUxrycUAAAAJ&hl=zh-CN">Xiaohui Li</a><sup>1,2*</sup>,&nbsp;&nbsp;</span>
+            <span class="author-block">
+              <a href="https://tianfan.info">Yihao Liu</a><sup>2*</sup>,&nbsp;&nbsp;</span>
+            <span class="author-block">
+              <a href="https://github.com/ChrisLiu6">Shuo Cao</a><sup>2</sup>,&nbsp;&nbsp;</span> 
+            <span class="author-block">
+              <a href="https://github.com/0x3f3f3f3fun">Ziyan Chen</a><sup>2</sup>,&nbsp;&nbsp;</span>
+            <span class="author-block">
+              <a href="https://gaopengcuhk.github.io">Shaobin Zhuang</a><sup>2</sup>,&nbsp;&nbsp;</span>
+            <span class="author-block">
+          </div>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">
+              <a href="https://scholar.google.com/citations?user=GMzzRRUAAAAJ&hl=en">Xiangyu Chen</a><sup>1</sup>,&nbsp;&nbsp;</span>
+            <span class="author-block">
+              <a href="https://scholar.google.com/citations?user=gFtI-8QAAAAJ&hl=en">Yinan He</a><sup>2</sup>,&nbsp;&nbsp;</span>
+            <span class="author-block">
+              <a href="https://wlouyang.github.io">Yi Wang</a><sup>1,2</sup>,&nbsp;&nbsp;</span>
+            <span class="author-block">
+              <a href="https://liuziwei7.github.io">Yu Qiao</a><sup>3</sup>,&nbsp;&nbsp;</span>
+            <span class="author-block">
+              <a href="https://liuziwei7.github.io">Chao Dong</a><sup>3&dagger;</sup></span>
+            <span class="author-block">
+          </div>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block"><sup>1</sup>Shanghai Jiao Tong University,&nbsp;&nbsp;</span>
+            <span class="author-block"><sup>2</sup>Shanghai Artificial Intelligence Laboratory,&nbsp;&nbsp;</span>
+          </div>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block"><sup>3</sup>Shenzhen Institute of Advanced Technology, Chinese Academy of Sciences,</span>
+          </div>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block"><sup>4</sup>University of Science and Technology of China,&nbsp;&nbsp;</span>
+            <span class="author-block"><sup>5</sup>Shenzhen University of Advanced Technology&nbsp;&nbsp;</span>
+          </div>
+
+          <div class="is-size-6 publication-authors">
+            <span class="author-block"><sup>&dagger;</sup>Corresponding authors</span>
+          </div>
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <!-- PDF Link. -->
+              <!-- <span class="link-block">
+                <a href="./xx.pdf" target="_blank"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                  </span>
+                  <span>Paper</span>
+                </a>
+              </span> -->
+              <!-- arXiv Link. -->
+              <span class="link-block">
+                <a href="https://arxiv.org/abs/2407.07667" target="_blank"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>arXiv</span>
+                </a>
+              </span>
+
+              <!-- Code Link. -->
+              <span class="link-block"> 
+                <a href="https://github.com/Vchitect/VEnhancer" target="_blank"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code</span>
+                  </a>
+              </span>
+
+              <!-- Video Link. -->
+              <span class="link-block">
+                <a href="https://www.youtube.com/watch?v=QMR_5weifGg" target="_blank"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-youtube"></i>
+                  </span>
+                  <span>Video</span>
+                </a>
+              </span>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="hero is-light is-small">
+  <div class="hero-body">
+    <div class="container">
+      <div id="results-carousel" class="carousel results-carousel">
+
+        <div class="item">
+          <div class="twentytwenty-container" data-orientation="horizontal" ratio="0.5556">
+            <div class="desc">Clown fish swimming through the coral reef.</div>
+            <div class="video">
+              <video muted autoplay="autoplay" loop="loop" width="100%">
+                <source src="./assets/videos/input_Clown fish swimming through the coral reef.mp4" type="video/mp4">
+              </video> 
+            </div>
+            <div class="video">
+              <video muted autoplay="autoplay" loop="loop" width="100%">
+                <source src="./assets/videos/out_Clown fish swimming through the coral reef.mp4" type="video/mp4">
+              </video>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="item">
+          <div class="twentytwenty-container" data-orientation="horizontal" ratio="0.5556">
+            <div class="desc">A fat rabbit wearing a purple robe walking through a fantasy landscape.</div>
+            <div class="video">
+              <video muted autoplay="autoplay" loop="loop" width="100%">
+                <source src="./assets/videos/input_A fat rabbit wearing a purple robe walking through a fantasy landscape.-1.mp4" type="video/mp4">
+              </video> 
+            </div>
+            <div class="video">
+              <video muted autoplay="autoplay" loop="loop" width="100%">
+                <source src="./assets/videos/out_A fat rabbit wearing a purple robe walking through a fantasy landscape.-1.mp4" type="video/mp4">
+              </video>
+            </div>
+          </div>
+        </div>
+
+        <div class="item">
+          <div class="twentytwenty-container" data-orientation="horizontal" ratio="0.5556">
+            <div class="desc">A cat wearing sunglasses at a pool.</div>
+            <div class="video">
+              <video muted autoplay="autoplay" loop="loop" width="100%">
+                <source src="./assets/videos/input_A cat wearing sunglasses at a pool-0.mp4" type="video/mp4">
+              </video> 
+            </div>
+            <div class="video">
+              <video muted autoplay="autoplay" loop="loop" width="100%">
+                <source src="./assets/videos/out_A cat wearing sunglasses at a pool-0.mp4" type="video/mp4">
+              </video>
+            </div>
+          </div>
+        </div>
+
+        <div class="item">
+          <div class="twentytwenty-container" data-orientation="horizontal" ratio="0.5556">
+            <div class="desc">A cute raccoon playing guitar in a boat on the ocean.</div>
+            <div class="video">
+              <video muted autoplay="autoplay" loop="loop" width="100%">
+                <source src="./assets/videos/input_A cute raccoon playing guitar in a boat on the ocean-3.mp4" type="video/mp4">
+              </video> 
+            </div>
+            <div class="video">
+              <video muted autoplay="autoplay" loop="loop" width="100%">
+                <source src="./assets/videos/out_A cute raccoon playing guitar in a boat on the ocean-3.mp4" type="video/mp4">
+              </video> 
+            </div>
+          </div>
+        </div>
+
+
+
+        <div class="item">
+          <div class="twentytwenty-container" data-orientation="horizontal" ratio="0.5556">
+            <div class="desc">Gwen Stacy reading a book, black and white.</div>
+            <div class="video">
+              <video muted autoplay="autoplay" loop="loop" width="100%">
+                <source src="./assets/videos/input_Gwen Stacy reading a book, black and white-2.mp4" type="video/mp4">
+              </video> 
+            </div>
+            <div class="video">
+              <video muted autoplay="autoplay" loop="loop" width="100%">
+                <source src="./assets/videos/out_Gwen Stacy reading a book, black and white-2.mp4" type="video/mp4">
+              </video>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="item">
+          <div class="twentytwenty-container" data-orientation="horizontal" ratio="0.5556">
+            <div class="desc">A storm trooper vacuuming the beach.</div>
+            <div class="video">
+              <video muted autoplay="autoplay" loop="loop" width="100%">
+                <source src="./assets/videos/input_A storm trooper vacuuming the beach.-4.mp4" type="video/mp4">
+              </video> 
+            </div>
+            <div class="video">
+              <video muted autoplay="autoplay" loop="loop" width="100%">
+                <source src="./assets/videos/out_A storm trooper vacuuming the beach.-4.mp4" type="video/mp4">
+              </video>
+            </div>
+          </div>
+        </div>
+
+        <div class="item">
+          <div class="twentytwenty-container" data-orientation="horizontal" ratio="0.5556">
+            <div class="desc">a teddy bear is swimming in the ocean.</div>
+            <div class="video">
+              <video muted autoplay="autoplay" loop="loop" width="100%">
+                <source src="./assets/videos/input_a teddy bear is swimming in the ocean.-0.mp4" type="video/mp4">
+              </video> 
+            </div>
+            <div class="video">
+              <video muted autoplay="autoplay" loop="loop" width="100%">
+                <source src="./assets/videos/out_a teddy bear is swimming in the ocean.-0.mp4" type="video/mp4">
+              </video>
+            </div>
+          </div>
+        </div>
+
+
+
+
+      </div>
+  </div>
+</section>
+
+
+<section class="hero is-light is-small">
+  <div class="hero-body">
+    <div class="container">
+      <div id="results-carousel" class="carousel results-carousel">
+
+
+        <div class="item">
+          <div class="twentytwenty-container" data-orientation="horizontal" ratio="0.5556">
+            <div class="desc">Iron Man flying in the sky.</div>
+            <div class="video">
+              <video muted autoplay="autoplay" loop="loop" width="100%">
+                <source src="./assets/videos/input_Iron Man flying in the sky-4.mp4" type="video/mp4">
+              </video> 
+            </div>
+            <div class="video">
+              <video muted autoplay="autoplay" loop="loop" width="100%">
+                <source src="./assets/videos/out_Iron Man flying in the sky-4.mp4" type="video/mp4">
+              </video> 
+            </div>
+          </div>
+        </div>
+
+
+        <div class="item">
+          <div class="twentytwenty-container" data-orientation="horizontal" ratio="0.5556">
+            <div class="desc">The bund Shanghai by Hokusai, in the style of Ukiyo.</div>
+            <div class="video">
+              <video muted autoplay="autoplay" loop="loop" width="100%">
+                <source src="./assets/videos/input_The bund Shanghai by Hokusai, in the style of Ukiyo-1.mp4" type="video/mp4">
+              </video> 
+            </div>
+            <div class="video">
+              <video muted autoplay="autoplay" loop="loop" width="100%">
+                <source src="./assets/videos/out_The bund Shanghai by Hokusai, in the style of Ukiyo-1.mp4" type="video/mp4">
+              </video> 
+            </div>
+          </div>
+        </div>
+
+
+        <div class="item">
+          <div class="twentytwenty-container" data-orientation="horizontal" ratio="0.5556">
+            <div class="desc">An astronaut is riding a horse in the space in a photorealistic style.</div>
+            <div class="video">
+              <video muted autoplay="autoplay" loop="loop" width="100%">
+                <source src="./assets/videos/input_An astronaut is riding a horse in the space in a photorealistic style.-1.mp4" type="video/mp4">
+              </video> 
+            </div>
+            <div class="video">
+              <video muted autoplay="autoplay" loop="loop" width="100%">
+                <source src="./assets/videos/out_An astronaut is riding a horse in the space in a photorealistic style.-1.mp4" type="video/mp4">
+              </video> 
+            </div>
+          </div>
+        </div>
+
+
+        <div class="item">
+          <div class="twentytwenty-container" data-orientation="horizontal" ratio="0.5556">
+            <div class="desc">A cute happy Corgi playing in park, sunset, in cyberpunk style.</div>
+            <div class="video">
+              <video muted autoplay="autoplay" loop="loop" width="100%">
+                <source src="./assets/videos/input_A cute happy Corgi playing in park, sunset, in cyberpunk style-3.mp4" type="video/mp4">
+              </video> 
+            </div>
+            <div class="video">
+              <video muted autoplay="autoplay" loop="loop" width="100%">
+                <source src="./assets/videos/out_A cute happy Corgi playing in park, sunset, in cyberpunk style-3.mp4" type="video/mp4">
+              </video> 
+            </div>
+          </div>
+        </div>
+
+
+        <div class="item">
+          <div class="twentytwenty-container" data-orientation="horizontal" ratio="0.5556">
+            <div class="desc">A teddy bear is playing drum kit in NYC Times Square.</div>
+            <div class="video">
+              <video muted autoplay="autoplay" loop="loop" width="100%">
+                <source src="./assets/videos/input_A teddy bear is playing drum kit in NYC Times Square.-0.mp4" type="video/mp4">
+              </video> 
+            </div>
+            <div class="video">
+              <video muted autoplay="autoplay" loop="loop" width="100%">
+                <source src="./assets/videos/out_A teddy bear is playing drum kit in NYC Times Square.-0.mp4" type="video/mp4">
+              </video> 
+            </div>
+          </div>
+        </div>
+
+
+
+        <div class="item">
+          <div class="twentytwenty-container" data-orientation="horizontal" ratio="0.5556">
+            <div class="desc">An astronaut flying in space, featuring a steady and smooth perspective.</div>
+            <div class="video">
+              <video muted autoplay="autoplay" loop="loop" width="100%">
+                <source src="./assets/videos/input_An astronaut flying in space, featuring a steady and smooth perspective-2.mp4" type="video/mp4">
+              </video> 
+            </div>
+            <div class="video">
+              <video muted autoplay="autoplay" loop="loop" width="100%">
+                <source src="./assets/videos/out_An astronaut flying in space, featuring a steady and smooth perspective-2.mp4" type="video/mp4">
+              </video>
+            </div>
+          </div>
+        </div>
+
+        <div class="item">
+          <div class="twentytwenty-container" data-orientation="horizontal" ratio="0.5556">
+            <div class="desc">An epic tornado attacking above a glowing city at night, the tornado is made of smoke.</div>
+            <div class="video">
+              <video muted autoplay="autoplay" loop="loop" width="100%">
+                <source src="./assets/videos/input_An epic tornado attacking above a glowing city at night, the tornado is made of smoke-4.mp4" type="video/mp4">
+              </video> 
+            </div>
+            <div class="video">
+              <video muted autoplay="autoplay" loop="loop" width="100%">
+                <source src="./assets/videos/out_An epic tornado attacking above a glowing city at night, the tornado is made of smoke-4.mp4" type="video/mp4">
+              </video> 
+            </div>
+          </div>
+        </div>
+
+
+
+
+
+
+      </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <!-- Abstract. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+      <!-- <div class="column"> -->
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            We present <b>DiffVSR</b>, a diffusion-based framework for real-world video super-resolution that effectively addresses the challenges of maintaining both high fidelity and temporal consistency. 
+            Diffusion models have demonstrated exceptional capabilities in image generation and restoration, yet their application to video super-resolution faces significant challenges in handling complex motion dynamics and maintaining temporal coherence. 
+            
+            To address these issues, our approach introduces several key innovations. For <b>intra-sequence coherence</b>, we develop a <em>multi-scale temporal attention module</em> and a <em>temporal-enhanced VAE decoder</em> to capture fine-grained motion details and ensure spatial accuracy. 
+            For <b>inter-sequence stability</b>, we propose a <em>noise rescheduling mechanism</em> combined with an <em>interweaved latent transition approach</em>, which enhances temporal consistency across frames without introducing additional training overhead. 
+            
+            To effectively train <b>DiffVSR</b>, we design <em>progressive learning</em> that transitions from simple to complex degradations, enabling robust optimization even with limited high-quality video data. 
+            Benefiting from these designs, <b>DiffVSR</b> achieves stable training and effectively handles real-world video degradation scenarios.
+            
+            Extensive experiments show that <b>DiffVSR</b> surpasses existing state-of-the-art video super-resolution methods in both visual quality and temporal consistency. 
+            Moreover, <b>DiffVSR</b> sets a new benchmark for real-world video super-resolution, paving the way for high-quality and temporally consistent video restoration in practical applications.
+          </p>
+        </div>
+      </div>
+    </div>
+    <!--/ Abstract. -->
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <!-- <div class="column is-four-fifths"> -->
+      <div class="column">
+        <h2 class="title is-3">Method</h2>
+        <div class="content has-text-justified">
+          <p>
+            Overview of our proposed DiffVSR framework. (a) The overall model architecture integrates enhanced UNet and VAE decoder
+            for high-quality frame restoration. (b) Detailed designs of our modified UNet and VAE decoder blocks for better feature extraction and
+            reconstruction. (c) Progressive Learning Strategy that enables stable training and robust performance across various degradation levels.
+            (d) Multi-Scale Temporal Attention (MSTA) mechanism designed for capturing temporal dependencies at different scales. Notably, spatial
+            layer includes ResBlock2D and Spatial Attention, while temporal layer contains ResBlock3D, Temporal Attention and MSTA module. 
+          </p>
+          <div class="column">
+            <img src="./assets/images/DiffVSR_method.png" />
+          </div>
+        </div>
+
+        <!-- Paper video. -->
+          <div id="spotlight-video">
+            <div class="container is-max-desktop">
+                <div class="column">
+                  <h2 class="title is-3">
+                    <span class="a">DiffVSR</span>
+                    <span class="b">Demo</span>
+                  </h2>
+                  <div class="publication-video">
+                    <iframe src="https://www.youtube.com/watch?v=ezRM2xF3fDw?rel=0&amp;showinfo=0"
+                            frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                  </div>
+              </div>
+            </div>
+          </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title">BibTeX</h2>
+    <pre><code>@article{he2024venhancer,
+      title={VEnhancer: Generative Space-Time Enhancement for Video Generation},
+      author={He, Jingwen and Xue, Tianfan and Liu, Dongyang and Lin, Xinqi and Gao, Peng and Lin, Dahua and Qiao, Yu and Ouyang, Wanli and Liu, Ziwei},
+      journal={arXiv preprint arXiv:2407.07667},
+      year={2024}
+    }
+}</code></pre>
+  </div>
+</section>
+
+
+<footer class="footer">
+  <div class="container">
+    <div class="content has-text-centered">
+      <a class="icon-link" href="" target="_blank">
+        <i class="fas fa-file-pdf"></i>
+      </a>
+      <a class="icon-link" href="https://github.com/Vchitect/VEnhancer" target="_blank">
+        <i class="fab fa-github"></i>
+      </a>
+      <a class="icon-link" href="https://youtu.be/QMR_5weifGg" target="_blank">
+        <i class="fab fa-youtube"></i>
+      </a>
+    </div>
+
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <div class="columns is-centered"><p>
+            This website template is borrowed from <a href="https://github.com/nerfies/nerfies.github.io" target="_blank">Here</a>. 
+          </p></div>
+        </div>
+      </div>
+    </div>
+
+    <!--=================Visitor==========================-->
+    <!-- <div class="content has-text-centered" style="padding:0 0 0 0">
+      <img src='https://visitor-badge.laobi.icu/badge?page_id=Vchitect/VEnhancer' alt='visitors'>
+    </div> -->
+
+  </div>
+</footer>
+
+  <!-- custom js file  -->
+  <!-- <script defer src="./assets/js/fontawesome.all.min.js"></script> -->
+  <script src="./assets/js/bulma-carousel.min.js"></script>
+  <script src="./assets/js/bulma-slider.min.js"></script>
+  <script src="./assets/js/index.js"></script>
+  <script src="./assets/js/jquery.event.move.js"></script>
+  <script src="./assets/js/jquery.twentytwenty.js"></script>
+  <script>
+  $(function(){
+    $(".twentytwenty-container").twentytwenty();
+    // $(".twentytwenty-container", "#results-carousel").twentytwenty({default_offset_pct: 0.5, ratio: 0.5});
+  });
+  </script>
+</body>
+</html>
