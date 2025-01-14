@@ -627,11 +627,11 @@
 
   </div>
 </section> -->
-
+<!-- 
 <section class="section">
   <div class="container">
 
-    <!-- 缩略图切换 (不动) -->
+
     <h2 class="title is-3 has-text-centered">Comparisons</h2>
     <div class="slide-menu" style="margin-bottom: 2rem;">
       <ul class="dots" style="display:flex; justify-content:center; gap:2rem; flex-wrap:wrap;">
@@ -650,9 +650,9 @@
       </ul>
     </div>
 
-    <!-- Slide 1 -->
+
     <div class="slide-content is-active" data-slide="0">
-      <!-- (1) 上下两个视频 -->
+
       <div class="columns is-2x1">
         <div>
           <figure style="text-align:center;">
@@ -675,7 +675,7 @@
           </figure>
         </div>
       </div>
-      <!-- (2) 一行四张图片 -->
+
       <div class="columns is-four-images">
         <figure style="text-align:center;">
           <img src="./assets/images/slide1_img1.jpg" alt="Scene 1.1"/>
@@ -696,7 +696,7 @@
       </div>
     </div>
 
-    <!-- Slide 2 -->
+
     <div class="slide-content" data-slide="1">
       <div class="columns is-2x1">
         <div>
@@ -736,7 +736,6 @@
       </div>
     </div>
 
-    <!-- Slide 3 -->
     <div class="slide-content" data-slide="2">
       <div class="columns is-2x1">
         <div>
@@ -776,7 +775,7 @@
       </div>
     </div>
 
-    <!-- Slide 4 -->
+
     <div class="slide-content" data-slide="3">
       <div class="columns is-2x1">
         <div>
@@ -821,6 +820,272 @@
 
 <script>
   // 点击切换逻辑
+  document.querySelectorAll('.slide-menu .dot').forEach(dot => {
+    dot.addEventListener('click', () => {
+      // 移除所有 dot 的激活态
+      document.querySelectorAll('.slide-menu .dot').forEach(d => d.classList.remove('is-active'));
+      dot.classList.add('is-active');
+
+      const slideIndex = dot.getAttribute('data-slide');
+      // 隐藏所有 slide
+      document.querySelectorAll('.slide-content').forEach(slide => {
+        slide.classList.remove('is-active');
+      });
+      // 只显示点击对应的那个 slide
+      document.querySelector(`.slide-content[data-slide="${slideIndex}"]`).classList.add('is-active');
+    });
+  });
+</script> -->
+
+<section class="section"></section>
+  <div class="container">
+    <h2 class="title is-3 has-text-centered">2×1 Switchable Slides with Four Images</h2>
+
+    <!-- 缩略图切换 -->
+    <div class="slide-menu" style="margin-bottom: 2rem;">
+      <ul class="dots" style="display:flex; justify-content:center; gap:2rem; flex-wrap:wrap;">
+        <li class="dot is-active" data-slide="0">
+          <img class="card-img" src="./assets/images/32.png" alt="Slide 1" style="width:80px; height:50px;">
+        </li>
+        <li class="dot" data-slide="1">
+          <img class="card-img" src="./assets/images/33.png" alt="Slide 2" style="width:80px; height:50px;">
+        </li>
+        <li class="dot" data-slide="2">
+          <img class="card-img" src="./assets/images/44.png" alt="Slide 3" style="width:80px; height:50px;">
+        </li>
+        <li class="dot" data-slide="3">
+          <img class="card-img" src="./assets/images/46.png" alt="Slide 4" style="width:80px; height:50px;">
+        </li>
+      </ul>
+    </div>
+
+    <!-- Slide 1 -->
+    <div class="slide-content is-active" data-slide="0">
+      <div class="columns is-2x1">
+        <!-- 第一行 (上部分) -->
+        <div class="item">
+          <div class="twentytwenty-container" data-orientation="horizontal" ratio="0.5556">
+            <div class="desc">Demo #1 (Top Part)</div>
+            <div class="video">
+              <video muted autoplay loop width="100%">
+                <source src="./assets/videos1/inputs/016.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div class="video">
+              <video muted autoplay loop width="100%">
+                <source src="./assets/videos1/outputs/016.mp4" type="video/mp4">
+              </video>
+            </div>
+          </div>
+        </div>
+        <!-- 第二行 (下部分) -->
+        <div class="item">
+          <div class="twentytwenty-container" data-orientation="horizontal" ratio="0.5556">
+            <div class="desc">Demo #1 (Bottom Part)</div>
+            <div class="video">
+              <video muted autoplay loop width="100%">
+                <source src="./assets/videos1/inputs/017.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div class="video">
+              <video muted autoplay loop width="100%">
+                <source src="./assets/videos1/outputs/017.mp4" type="video/mp4">
+              </video>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- 下面的四个图 -->
+      <div class="columns is-four-images">
+        <figure style="text-align:center;">
+          <img src="./assets/images/slide1_img1.jpg" alt="Scene 1.1"/>
+          <figcaption style="margin-top:8px;">Frame 1</figcaption>
+        </figure>
+        <figure style="text-align:center;">
+          <img src="./assets/images/slide1_img2.jpg" alt="Scene 1.2"/>
+          <figcaption style="margin-top:8px;">Frame 2</figcaption>
+        </figure>
+        <figure style="text-align:center;">
+          <img src="./assets/images/slide1_img3.jpg" alt="Scene 1.3"/>
+          <figcaption style="margin-top:8px;">Frame 3</figcaption>
+        </figure>
+        <figure style="text-align:center;">
+          <img src="./assets/images/slide1_img4.jpg" alt="Scene 1.4"/>
+          <figcaption style="margin-top:8px;">Frame 4</figcaption>
+        </figure>
+      </div>
+    </div>
+
+    <!-- Slide 2 -->
+    <div class="slide-content" data-slide="1">
+      <div class="columns is-2x1">
+        <div class="item">
+          <div class="twentytwenty-container" data-orientation="horizontal" ratio="0.5556">
+            <div class="desc">Demo #2 (Top Part)</div>
+            <div class="video">
+              <video muted autoplay loop width="100%">
+                <source src="./assets/videos1/inputs/018.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div class="video">
+              <video muted autoplay loop width="100%">
+                <source src="./assets/videos1/outputs/018.mp4" type="video/mp4">
+              </video>
+            </div>
+          </div>
+        </div>
+        <div class="item">
+          <div class="twentytwenty-container" data-orientation="horizontal" ratio="0.5556">
+            <div class="desc">Demo #2 (Bottom Part)</div>
+            <div class="video">
+              <video muted autoplay loop width="100%">
+                <source src="./assets/videos1/inputs/019.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div class="video">
+              <video muted autoplay loop width="100%">
+                <source src="./assets/videos1/outputs/019.mp4" type="video/mp4">
+              </video>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- 下面的四个图 -->
+      <div class="columns is-four-images">
+        <figure style="text-align:center;">
+          <img src="./assets/images/slide2_img1.jpg" alt="Scene 2.1"/>
+          <figcaption style="margin-top:8px;">Frame 1</figcaption>
+        </figure>
+        <figure style="text-align:center;">
+          <img src="./assets/images/slide2_img2.jpg" alt="Scene 2.2"/>
+          <figcaption style="margin-top:8px;">Frame 2</figcaption>
+        </figure>
+        <figure style="text-align:center;">
+          <img src="./assets/images/slide2_img3.jpg" alt="Scene 2.3"/>
+          <figcaption style="margin-top:8px;">Frame 3</figcaption>
+        </figure>
+        <figure style="text-align:center;">
+          <img src="./assets/images/slide2_img4.jpg" alt="Scene 2.4"/>
+          <figcaption style="margin-top:8px;">Frame 4</figcaption>
+        </figure>
+      </div>
+    </div>
+
+    <!-- Slide 3 -->
+    <div class="slide-content" data-slide="2">
+      <div class="columns is-2x1">
+        <div class="item">
+          <div class="twentytwenty-container" data-orientation="horizontal" ratio="0.5556">
+            <div class="desc">Demo #3 (Top Part)</div>
+            <div class="video">
+              <video muted autoplay loop width="100%">
+                <source src="./assets/videos1/inputs/020.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div class="video">
+              <video muted autoplay loop width="100%">
+                <source src="./assets/videos1/outputs/020.mp4" type="video/mp4">
+              </video>
+            </div>
+          </div>
+        </div>
+        <div class="item">
+          <div class="twentytwenty-container" data-orientation="horizontal" ratio="0.5556">
+            <div class="desc">Demo #3 (Bottom Part)</div>
+            <div class="video">
+              <video muted autoplay loop width="100%">
+                <source src="./assets/videos1/inputs/021.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div class="video">
+              <video muted autoplay loop width="100%">
+                <source src="./assets/videos1/outputs/021.mp4" type="video/mp4">
+              </video>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- 下面的四个图 -->
+      <div class="columns is-four-images">
+        <figure style="text-align:center;">
+          <img src="./assets/images/slide3_img1.jpg" alt="Scene 3.1"/>
+          <figcaption style="margin-top:8px;">Frame 1</figcaption>
+        </figure>
+        <figure style="text-align:center;">
+          <img src="./assets/images/slide3_img2.jpg" alt="Scene 3.2"/>
+          <figcaption style="margin-top:8px;">Frame 2</figcaption>
+        </figure>
+        <figure style="text-align:center;">
+          <img src="./assets/images/slide3_img3.jpg" alt="Scene 3.3"/>
+          <figcaption style="margin-top:8px;">Frame 3</figcaption>
+        </figure>
+        <figure style="text-align:center;">
+          <img src="./assets/images/slide3_img4.jpg" alt="Scene 3.4"/>
+          <figcaption style="margin-top:8px;">Frame 4</figcaption>
+        </figure>
+      </div>
+    </div>
+
+    <!-- Slide 4 -->
+    <div class="slide-content" data-slide="3">
+      <div class="columns is-2x1">
+        <div class="item">
+          <div class="twentytwenty-container" data-orientation="horizontal" ratio="0.5556">
+            <div class="desc">Demo #4 (Top Part)</div>
+            <div class="video">
+              <video muted autoplay loop width="100%">
+                <source src="./assets/videos1/inputs/022.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div class="video">
+              <video muted autoplay loop width="100%">
+                <source src="./assets/videos1/outputs/022.mp4" type="video/mp4">
+              </video>
+            </div>
+          </div>
+        </div>
+        <div class="item">
+          <div class="twentytwenty-container" data-orientation="horizontal" ratio="0.5556">
+            <div class="desc">Demo #4 (Bottom Part)</div>
+            <div class="video">
+              <video muted autoplay loop width="100%">
+                <source src="./assets/videos1/inputs/023.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div class="video">
+              <video muted autoplay loop width="100%">
+                <source src="./assets/videos1/outputs/023.mp4" type="video/mp4">
+              </video>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- 下面的四个图 -->
+      <div class="columns is-four-images">
+        <figure style="text-align:center;">
+          <img src="./assets/images/slide4_img1.jpg" alt="Scene 4.1"/>
+          <figcaption style="margin-top:8px;">Frame 1</figcaption>
+        </figure>
+        <figure style="text-align:center;">
+          <img src="./assets/images/slide4_img2.jpg" alt="Scene 4.2"/>
+          <figcaption style="margin-top:8px;">Frame 2</figcaption>
+        </figure>
+        <figure style="text-align:center;">
+          <img src="./assets/images/slide4_img3.jpg" alt="Scene 4.3"/>
+          <figcaption style="margin-top:8px;">Frame 3</figcaption>
+        </figure>
+        <figure style="text-align:center;">
+          <img src="./assets/images/slide4_img4.jpg" alt="Scene 4.4"/>
+          <figcaption style="margin-top:8px;">Frame 4</figcaption>
+        </figure>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<script>
+  // 点击缩略图切换逻辑
   document.querySelectorAll('.slide-menu .dot').forEach(dot => {
     dot.addEventListener('click', () => {
       // 移除所有 dot 的激活态
@@ -1027,7 +1292,7 @@
       transform: scale(1.2);
     }
   </style> -->
-
+<!-- 
   <style>
     /* 上下两个视频布局：1列2行 */
     .columns.is-2x1 {
@@ -1076,8 +1341,79 @@
       border: 2px solid #ccc;
       border-radius: 4px;
     }
-  </style>
+  </style> -->
 
+  <style>
+    /* 上下两个内容布局：1列2行 */
+    .columns.is-2x1 {
+      display: grid;
+      grid-template-columns: 1fr;     /* 1 列 */
+      grid-template-rows: auto auto; /* 2 行 */
+      gap: 1rem;
+    }
+
+    /* 默认隐藏每个 slide */
+    .slide-content {
+      display: none;
+    }
+
+    /* 只显示被点选的 slide */
+    .slide-content.is-active {
+      display: block;
+    }
+
+    /* 去掉小圆点默认背景 */
+    .dots .dot {
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+
+    /* 缩略图样式 (可按需保留/修改) */
+    .card-img {
+      border: 2px solid #c1bfbf;
+      border-radius: 8px;
+      padding: 2px;
+      display: inline-block;
+      transition: transform 0.3s ease-in-out;
+      transform-origin: center center;
+    }
+    .card-img:active {
+      transform: scale(1.2);
+    }
+
+    /* TwentyTwenty 容器示例样式，仅供参考 */
+    .twentytwenty-container {
+      position: relative;
+      overflow: hidden;
+      background: #eee; /* 对比区背景色 */
+      border: 2px solid #ccc;
+      border-radius: 4px;
+      padding: 1rem;
+    }
+    .twentytwenty-container .desc {
+      font-weight: bold;
+      margin-bottom: 0.5rem;
+      text-align: center;
+    }
+    .twentytwenty-container .video {
+      margin: 0.5rem 0;
+    }
+
+    /* 让四张图片等分排列在一行 */
+    .columns.is-four-images {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr); /* 一行四列 */
+      gap: 1rem;
+      margin-top: 1.5rem; /* 与上方留些间隔 */
+    }
+    .columns.is-four-images img {
+      width: 100%;
+      height: auto;
+      border: 2px solid #ccc;
+      border-radius: 4px;
+    }
+  </style>
 
 </body>
 </html>
