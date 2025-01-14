@@ -1115,6 +1115,10 @@
       });
       // 只显示点击对应的那个 slide
       document.querySelector(`.slide-content[data-slide="${slideIndex}"]`).classList.add('is-active');
+      // 触发一次重绘：让 TwentyTwenty 能够拿到正确的宽高重新绘制
+      $(window).trigger('resize');
+      // 或者给可见 slide 内部的 .twentytwenty-container 再初始化一次
+      $(activeSlide).find('.twentytwenty-container').twentytwenty();
     });
   });
 </script>
