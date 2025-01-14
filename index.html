@@ -35,78 +35,6 @@
   .hr {width: 100%; height: 1px; margin: 48px 0; background-color: #d6dbdf;}
   </style>
 
-  <style>
-    /* 上下两个内容布局：1列2行 */
-    .columns.is-2x1 {
-      display: grid;
-      grid-template-columns: 1fr;     /* 1 列 */
-      grid-template-rows: auto auto; /* 2 行 */
-      gap: 1rem;
-    }
-
-    /* 默认隐藏每个 slide */
-    .slide-content {
-      display: none;
-    }
-
-    /* 只显示被点选的 slide */
-    .slide-content.is-active {
-      display: block;
-    }
-
-    /* 去掉小圆点默认背景 */
-    .dots .dot {
-      background: none;
-      border: none;
-      cursor: pointer;
-    }
-
-    /* 缩略图样式 (可按需保留/修改) */
-    .card-img {
-      border: 2px solid #c1bfbf;
-      border-radius: 8px;
-      padding: 2px;
-      display: inline-block;
-      transition: transform 0.3s ease-in-out;
-      transform-origin: center center;
-    }
-    .card-img:active {
-      transform: scale(1.2);
-    }
-
-    /* TwentyTwenty 容器示例样式，仅供参考 */
-    .twentytwenty-container {
-      position: relative;
-      overflow: hidden;
-      background: #eee; /* 对比区背景色 */
-      border: 2px solid #ccc;
-      border-radius: 4px;
-      padding: 1rem;
-    }
-    .twentytwenty-container .desc {
-      font-weight: bold;
-      margin-bottom: 0.5rem;
-      text-align: center;
-    }
-    .twentytwenty-container .video {
-      margin: 0.5rem 0;
-    }
-
-    /* 让四张图片等分排列在一行 */
-    .columns.is-four-images {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr); /* 一行四列 */
-      gap: 1rem;
-      margin-top: 1.5rem; /* 与上方留些间隔 */
-    }
-    .columns.is-four-images img {
-      width: 100%;
-      height: auto;
-      border: 2px solid #ccc;
-      border-radius: 4px;
-    }
-  </style>
-
   <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
   <link rel="stylesheet" href="./assets/css/bulma.min.css">
   <link rel="stylesheet" href="./assets/css/bulma-carousel.min.css">
@@ -114,7 +42,6 @@
   <link rel="stylesheet" href="./assets/css/fontawesome.all.min.css">
   <link rel="stylesheet" href="./assets/css/index.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
-
 
   <!-- custom css file  -->
   <link rel="stylesheet" href="./assets/css/style.css">
@@ -1347,7 +1274,8 @@
   </script>
 
 
-
+  <!-- 引入 Bulma CSS （需要时再加，如果已有可忽略） -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
   <!-- <style>
     /* 如果想固定强制 2×2，可自行覆盖 Bulma 样式，如下： */
     .columns.is-2x2 {
@@ -1431,7 +1359,59 @@
     }
   </style> -->
 
+  <style>
+    /* 上下两个内容布局：1列2行 */
+    .columns.is-2x1 {
+      display: grid;
+      grid-template-columns: 1fr;     /* 1 列 */
+      grid-template-rows: auto auto; /* 2 行 */
+      gap: 1rem;
+    }
 
+    /* 默认隐藏每个 slide */
+    .slide-content {
+      display: none;
+    }
+
+    /* 只显示被点选的 slide */
+    .slide-content.is-active {
+      display: block;
+    }
+
+    /* 去掉小圆点默认背景 */
+    .dots .dot {
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+
+    /* 缩略图样式 (可按需保留/修改) */
+    .card-img {
+      border: 2px solid #c1bfbf;
+      border-radius: 8px;
+      padding: 2px;
+      display: inline-block;
+      transition: transform 0.3s ease-in-out;
+      transform-origin: center center;
+    }
+    .card-img:active {
+      transform: scale(1.2);
+    }
+
+    /* 让四张图片等分排列在一行 */
+    .columns.is-four-images {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr); /* 一行四列 */
+      gap: 1rem;
+      margin-top: 1.5rem; /* 与上方留些间隔 */
+    }
+    .columns.is-four-images img {
+      width: 100%;
+      height: auto;
+      border: 2px solid #ccc;
+      border-radius: 4px;
+    }
+  </style>
 
 </body>
 </html>
