@@ -60,10 +60,13 @@
             <span style="color: #EA4335;">D</span><span style="color: #4285F4;">iff</span><span style="color: #FBBC05;">V</span><span style="color: #34A853;">SR</span>
           </h1>
           <h1 class="title is-3 publication-title"> 
-            Enhancing Real-World Video Super-Resolution with Diffusion Models
+            Revealing an Effective Recipe 
           </h1>
           <h1 class="title is-3 publication-title"> 
-            for Advanced Visual Quality and Temporal Consistency
+            for Taming Robust Video Super-Resolution
+          </h1>
+          <h1 class="title is-3 publication-title"> 
+            Against Complex Degradations
           </h1>
 
           <div class="is-size-5 publication-authors">
@@ -226,7 +229,7 @@
 
         <div class="item">
           <div class="twentytwenty-container" data-orientation="horizontal" ratio="0.5556">
-            <div class="desc">Real-world video</div>
+            <div class="desc">from VideoLQ</div>
             <div class="video">
               <video muted autoplay="autoplay" loop="loop" width="100%">
                 <source src="./assets/videos/inputs/012.mp4" type="video/mp4">
@@ -1145,17 +1148,16 @@
         <h2 class="title is-3">Abstract</h2>
         <div class="content has-text-justified">
           <p>
-            We present <b>DiffVSR</b>, a diffusion-based framework for real-world video super-resolution that effectively addresses the challenges of maintaining both high fidelity and temporal consistency. 
-            Diffusion models have demonstrated exceptional capabilities in image generation and restoration, yet their application to video super-resolution faces significant challenges in handling complex motion dynamics and maintaining temporal coherence. 
+            Diffusion models have demonstrated exceptional capabilities in image restoration, yet their application to video super-resolution (VSR) faces significant challenges in balancing fidelity with temporal consistency. 
+            Our evaluation reveals a critical gap: existing approaches consistently fail on severely degraded videos--precisely where diffusion models' generative capabilities are most needed. 
             
-            To address these issues, our approach introduces several key innovations. For <b>intra-sequence coherence</b>, we develop a <em>multi-scale temporal attention module</em> and a <em>temporal-enhanced VAE decoder</em> to capture fine-grained motion details and ensure spatial accuracy. 
-            For <b>inter-sequence stability</b>, we propose a <em>noise rescheduling mechanism</em> combined with an <em>interweaved latent transition approach</em>, which enhances temporal consistency across frames without introducing additional training overhead. 
+            We identify that existing diffusion-based VSR methods struggle primarily because they face an overwhelming learning burden: simultaneously modeling complex degradation distributions, content representations, and temporal relationships with limited high-quality training data. 
             
-            To effectively train <b>DiffVSR</b>, we design <em>progressive learning</em> that transitions from simple to complex degradations, enabling robust optimization even with limited high-quality video data. 
-            Benefiting from these designs, <b>DiffVSR</b> achieves stable training and effectively handles real-world video degradation scenarios.
+            To address this fundamental challenge, we present <b>DiffVSR</b>, featuring a <em>Progressive Learning Strategy (PLS)</em> that systematically decomposes this learning burden through staged training, enabling superior performance on complex degradations. 
+            Our framework additionally incorporates an <em>Interweaved Latent Transition (ILT)</em> technique that maintains competitive temporal consistency without additional training overhead. 
             
-            Extensive experiments show that <b>DiffVSR</b> surpasses existing state-of-the-art video super-resolution methods in both visual quality and temporal consistency. 
-            Moreover, <b>DiffVSR</b> sets a new benchmark for real-world video super-resolution, paving the way for high-quality and temporally consistent video restoration in practical applications.
+            Experiments demonstrate that our approach excels in scenarios where competing methods struggle, particularly on severely degraded videos. 
+            Our work reveals that addressing the learning strategy, rather than focusing solely on architectural complexity, is the critical path toward robust real-world video super-resolution with diffusion models.
           </p>
         </div>
       </div>
@@ -1172,16 +1174,23 @@
         <h2 class="title is-3">Method</h2>
         <div class="content has-text-justified">
           <p>
-            Overview of our proposed DiffVSR framework. (a) The overall model architecture integrates enhanced UNet and VAE decoder
-            for high-quality frame restoration. (b) Detailed designs of our modified UNet and VAE decoder blocks for better feature extraction and
-            reconstruction. (c) Progressive Learning Strategy that enables stable training and robust performance across various degradation levels.
-            (d) Multi-Scale Temporal Attention (MSTA) mechanism designed for capturing temporal dependencies at different scales. Notably, spatial
-            layer includes ResBlock2D and Spatial Attention, while temporal layer contains ResBlock3D, Temporal Attention and MSTA module. 
+            Overview of our proposed DiffVSR framework. (a) Model architecture with enhanced UNet and VAE. (b) Architectural improvements for feature extraction and reconstruction. (c) Progressive Learning Strategy (PLS), our core innovation for handling complex degradations. (d) Multi-Scale Temporal Attention (MSTA) for capturing temporal dependencies at different scales.
           </p>
           <div class="column">
             <img src="./assets/images/DiffVSR_method.png" />
           </div>
         </div>
+
+        <div class="content has-text-justified">
+          <p>
+            Interweaved Latent Transition approach illustrated. By combining strategic noise rescheduling across overlapping regions with position-based latent interpolation between adjacent subsequences, this lightweight solution ensures temporal consistency without requiring additional training or computational resources.
+          </p>
+          <div class="column">
+            <img src="./assets/images/ILT.png" />
+          </div>
+        </div>
+
+    
 
         <!-- Paper video. -->
           <div id="spotlight-video">
